@@ -3,6 +3,8 @@
 A [herdr](https://herdr.dev) plugin that turns the URLs in a pane into something you can act on,
 including from a machine that has no browser.
 
+![The picker popup over a Claude Code pane on a remote box](docs/picker.png)
+
 ## What it does
 
 Ctrl+click an `http(s)` URL in any pane, or press `prefix+u` to pick one from the focused pane.
