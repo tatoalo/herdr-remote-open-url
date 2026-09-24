@@ -1,0 +1,40 @@
+id = "remote-open-url"
+name = "Remote Open URL"
+version = "0.1.0"
+min_herdr_version = "0.9.0"
+description = "Ctrl+click a URL or pick one from the pane. Opens a browser where the host has one, copies to your clipboard when it does not, and never pages an idle agent."
+platforms = ["linux", "macos"]
+
+[[actions]]
+id = "pick"
+title = "Pick a URL from the focused pane"
+contexts = ["pane"]
+command = ["bash", "pick.sh"]
+
+[[actions]]
+id = "open-clicked"
+title = "Open the clicked URL"
+contexts = ["pane"]
+command = ["bash", "open-clicked.sh"]
+
+[[panes]]
+id = "picker"
+title = "open url"
+placement = "popup"
+width = "70%"
+height = "50%"
+command = ["bash", "picker.sh"]
+
+[[panes]]
+id = "copy"
+title = "copied"
+placement = "popup"
+width = 60
+height = 5
+command = ["bash", "copy.sh"]
+
+[[link_handlers]]
+id = "web"
+title = "Open URL"
+pattern = "(?i)^https?://"
+action = "open-clicked"
