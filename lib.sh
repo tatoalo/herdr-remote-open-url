@@ -43,10 +43,16 @@ extract_urls() {
 }
 
 pane_urls() {
-  local pane="$1" out
-  out="$("$herdr" pane read "$pane" --source visible --format text 2>/dev/null | extract_urls)"
-  [ -n "$out" ] || out="$("$herdr" pane read "$pane" --source recent --format text 2>/dev/null | extract_urls)"
+  local pane="$1" out src
+  for src in recent-unwrapped visible recent; do
+    out="$("$herdr" pane read "$pane" --source "$src" --format text 2>/dev/null | extract_urls)"
+    [ -n "$out" ] && break
+  done
   [ -n "$out" ] || [ -z "${REMOTE_OPEN_URL_LINES:-}" ] \
     || out="$("$herdr" pane read "$pane" --source recent-unwrapped --lines "$REMOTE_OPEN_URL_LINES" --format text 2>/dev/null | extract_urls)"
   printf '%s' "$out"
+}
+
+full_url() {
+  pane_urls "$1" | U="$2" awk 'index($0, ENVIRON["U"]) == 1 && length($0) > length(best) { best = $0 } END { print (best != "" ? best : ENVIRON["U"]) }'
 }
