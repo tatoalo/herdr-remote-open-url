@@ -70,6 +70,9 @@ herdr plugin link ./herdr-remote-open-url
 herdr plugin action list --plugin remote-open-url
 ```
 
+To release, bump `version` in `herdr-plugin.toml`. When that change lands on `main`, the release
+workflow tags `v<version>` and publishes a GitHub release.
+
 ## License
 
 MIT
