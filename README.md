@@ -17,8 +17,9 @@ terminal with OSC 52, and a toast confirms it.
 
 The pickers that already exist read hundreds of lines of history. That makes herdr page an idle
 coding agent through its own scrollback, so the pane visibly scrolls while you are only looking
-for a link. This plugin reads the visible screen first, falls back to recent output, and scans
-deeper only when you ask for it.
+for a link. This plugin reads recent output with soft-wrapped lines joined, so a URL longer than
+the pane width comes back whole. It falls back to the visible screen, and scans deeper only when
+you ask for it.
 
 None of them handle a host without a browser either. Here the URL reaches your clipboard instead
 of failing silently.
