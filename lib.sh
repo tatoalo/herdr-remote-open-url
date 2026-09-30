@@ -42,12 +42,18 @@ extract_urls() {
     | awk '!seen[$0]++'
 }
 
+pane_rows() {
+  "$herdr" pane get "$1" 2>/dev/null | python3 -c '
+import json, sys
+try: print(json.load(sys.stdin)["result"]["pane"]["scroll"]["viewport_rows"])
+except Exception: print("")' 2>/dev/null
+}
+
 pane_urls() {
-  local pane="$1" out src
-  for src in recent-unwrapped visible recent; do
-    out="$("$herdr" pane read "$pane" --source "$src" --format text 2>/dev/null | extract_urls)"
-    [ -n "$out" ] && break
-  done
+  local pane="$1" out="" rows
+  rows="$(pane_rows "$pane")"
+  [ -z "$rows" ] || out="$("$herdr" pane read "$pane" --source recent-unwrapped --lines "$rows" --format text 2>/dev/null | extract_urls)"
+  [ -n "$out" ] || out="$("$herdr" pane read "$pane" --source visible --format text 2>/dev/null | extract_urls)"
   [ -n "$out" ] || [ -z "${REMOTE_OPEN_URL_LINES:-}" ] \
     || out="$("$herdr" pane read "$pane" --source recent-unwrapped --lines "$REMOTE_OPEN_URL_LINES" --format text 2>/dev/null | extract_urls)"
   printf '%s' "$out"

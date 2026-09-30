@@ -1,6 +1,6 @@
 id = "remote-open-url"
 name = "Remote Open URL"
-version = "0.1.1"
+version = "0.1.2"
 min_herdr_version = "0.9.0"
 description = "Ctrl+click a URL or pick one from the pane. Opens a browser where the host has one, copies to your clipboard when it does not, and never pages an idle agent."
 platforms = ["linux", "macos"]
