@@ -8,6 +8,8 @@ including from a machine that has no browser.
 ## What it does
 
 Ctrl+click an `http(s)` URL in any pane, or press `prefix+u` to pick one from the focused pane.
+The picker lists the newest URL first: the lowest one in the pane, so the link the agent printed
+last is at the top. A URL that appears more than once takes the place of its last mention.
 
 Where the herdr server has a browser, the URL opens there. Where it does not, which is the case
 for a remote dev box you reach over SSH, the URL is copied to your local clipboard through the

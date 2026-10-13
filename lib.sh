@@ -33,12 +33,17 @@ copy_url() {
   printf '\e]52;c;%s\a' "$(printf '%s' "$1" | base64 | tr -d '\n')"
 }
 
+reverse() {
+  if command -v tac >/dev/null 2>&1; then tac; else tail -r; fi
+}
+
 extract_urls() {
   local esc
   esc="$(printf '\033')"
   sed -E "s/${esc}\[[0-9;]*[A-Za-z]//g" \
     | grep -oE 'https?://[A-Za-z0-9._~:/?#@!$&*+,;=%()-]+' \
     | sed -E 's/[).,;:]+$//' \
+    | reverse \
     | awk '!seen[$0]++'
 }
 
